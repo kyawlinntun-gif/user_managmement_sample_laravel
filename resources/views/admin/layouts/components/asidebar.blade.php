@@ -23,30 +23,38 @@
         </a>
       </li>
       @endcan
+      @can('has-permission', ['read', 'role'])
       <li class="nav-item">
-        <a class="nav-link <?= $_SERVER['REQUEST_URI'] === '/admin/roles' ? 'active bg-gradient-dark text-white' : 'text-dark'; ?>" href="/admin/roles">
+        <a class="nav-link {{ Request::is('admin/roles') ? 'active bg-gradient-dark text-white' : 'text-dark' }}" href="{{ url('/admin/roles') }}">
           <i class="material-symbols-rounded opacity-5">task</i>
           <span class="nav-link-text ms-1">Roles</span>
         </a>
       </li>
+      @endcan
+      @can('has-permission', ['read', 'permissions'])
       <li class="nav-item">
-        <a class="nav-link <?= $_SERVER['REQUEST_URI'] === '/admin/permissions' ? 'active bg-gradient-dark text-white' : 'text-dark'; ?>" href="/admin/permissions">
+        <a class="nav-link {{ Request::is('admin/permissions') ? 'active bg-gradient-dark text-white' : 'text-dark' }}" href="{{ url('/admin/permissions') }}">
           <i class="material-symbols-rounded opacity-5">license</i>
           <span class="nav-link-text ms-1">Permissions</span>
         </a>
       </li>
+      @endcan
+      @can('has-permission', ['read', 'features'])
       <li class="nav-item">
-        <a class="nav-link <?= $_SERVER['REQUEST_URI'] === '/admin/features' ? 'active bg-gradient-dark text-white' : 'text-dark'; ?>" href="/admin/features">
+        <a class="nav-link {{ Request::is('admin/features') ? 'active bg-gradient-dark text-white' : 'text-dark' }}" href="{{ url('/admin/features') }}">
           <i class="material-symbols-rounded opacity-5">search</i>
           <span class="nav-link-text ms-1">Features</span>
         </a>
       </li>
+      @endcan
+      @can('has-permission', ['read', 'product'])
       <li class="nav-item">
-        <a class="nav-link <?= $_SERVER['REQUEST_URI'] === '/admin/products' ? 'active bg-gradient-dark text-white' : 'text-dark'; ?>" href="/admin/products">
+        <a class="nav-link {{ Request::is('admin/products') ? 'active bg-gradient-dark text-white' : 'text-dark' }}" href="{{ url('/admin/products') }}">
           <i class="material-symbols-rounded opacity-5">productivity</i>
           <span class="nav-link-text ms-1">Products</span>
         </a>
       </li>
+      @endcan
       <li class="nav-item mt-3">
         <h6 class="ps-4 ms-2 text-uppercase text-xs text-dark font-weight-bolder opacity-5">Account pages</h6>
       </li>
@@ -56,7 +64,7 @@
           <span class="nav-link-text ms-1">Sign Out</span>
         </a>
         </a>
-        <form action="/logout" method="POST" id="logoutAdminUser" class="d-none">
+        <form action="{{ url('/logout') }}" method="POST" id="logoutAdminUser" class="d-none">
           @csrf
         </form>
       </li>

@@ -49,6 +49,6 @@ class HomeController extends Controller
             }
         }
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Updated successfully!');
     }
 }

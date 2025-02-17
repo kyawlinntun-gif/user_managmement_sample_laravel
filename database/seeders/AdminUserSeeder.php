@@ -17,7 +17,7 @@ class AdminUserSeeder extends Seeder
             ['name' => 'Kyaw Kyaw', 'username' => 'kyawkyaw', 'role_id' => 1, 'phone' => '09796937456', 'email' => 'kyawkyaw@gmail.com', 'address' => 'bahan', 'password' => password_hash('password', PASSWORD_BCRYPT), 'gender' => 1, 'is_active' => 1],
             ['name' => 'Aung Aung', 'username' => 'aungaung', 'role_id' => 2, 'phone' => '09796937456', 'email' => 'aungaung@gmail.com', 'address' => 'bahan', 'password' => password_hash('password', PASSWORD_BCRYPT), 'gender' => 1, 'is_active' => 1],
             ['name' => 'Mg Mg', 'username' => 'mgmg', 'role_id' => 4, 'phone' => '09796937456', 'email' => 'mgmg@gmail.com', 'address' => 'mandalay', 'password' => password_hash('password', PASSWORD_BCRYPT), 'gender' => 1, 'is_active' => 1],
-            ['name' => 'Aye Aye', 'username' => 'ayeaye', 'role_id' => null, 'phone' => '09796937456', 'email' => 'ayeaye@gmail.com', 'address' => 'rakhine', 'password' => password_hash('password', PASSWORD_BCRYPT), 'gender' => 1, 'is_active' => 0],
+            ['name' => 'Aye Aye', 'username' => 'ayeaye', 'role_id' => null, 'phone' => '09796937456', 'email' => 'ayeaye@gmail.com', 'address' => 'rakhine', 'password' => password_hash('password', PASSWORD_BCRYPT), 'gender' => 0, 'is_active' => 0],
         ];
         foreach ($admin_users as $new_user) {
             $admin_user = new AdminUser();

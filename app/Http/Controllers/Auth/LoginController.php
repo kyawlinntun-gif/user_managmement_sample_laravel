@@ -16,11 +16,11 @@ class LoginController extends Controller
 
     public function login(LoginRequest $request)
     {
-        if(Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+        if(Auth::attempt(['email' => $request->email, 'password' => $request->password, 'is_active' => 1])) {
             return redirect('/');
         }
         return redirect()->back()->withInput($request->except('password'))
-                                    ->withErrors(['message' => 'Invalid credentials']);
+                                    ->withErrors(['message' => 'Invalid credentials or inactive account.']);
     }
 
     public function logout()

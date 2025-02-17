@@ -10,6 +10,9 @@
     <div class="row">
       <div class="col-12">
         <div class="card my-4">
+          @if(Session::has('success'))
+          <div class="alert alert-success text-white mt-4 mx-3">{{ Session::get('success') }}</div>
+          @endif
           <div class="card-header text-center"><h3>Manage Setting</h3></div>
           <div class="card-body">
             @if ($errors->any())

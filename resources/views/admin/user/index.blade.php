@@ -20,6 +20,9 @@
             </div>
           </div>
           <div class="card-body px-0 pb-2">
+            @if(Session::has('success'))            
+            <div class="alert alert-success text-white mt-4 mx-3">{{ Session::get('success') }}</div>
+            @endif
             <div class="table-responsive p-0">
               <table class="table align-items-center mb-0">
                 <thead>
@@ -65,19 +68,23 @@
                             <span class="badge badge-sm bg-gradient-success">{{ $admin_user->gender == 1 ? 'Male' : 'Female'; }}</span>
                           </td>
                           <td class="align-middle text-center text-sm">
-                            <span class="badge badge-sm bg-gradient-success">{{ $admin_user->is_active = 1 ? 'Active' : 'Inactive'; }}</span>
+                            <span class="badge badge-sm bg-gradient-success">{{ $admin_user->is_active == 1 ? 'Active' : 'Inactive'; }}</span>
                           </td>
                           <td class="align-middle">
+                            @can('has-permission', ['update', 'user'])
                             <a href="{{ url('/admin/users/' . $admin_user->id) }}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                               Edit
                             </a>
+                            @endcan
                             @if(auth()->user()->id !== $admin_user->id && optional($admin_user->role)->name !== 'admin') 
                             @can('has-permission', ['delete', 'user'])
                             <span> | </span>
                             <a href="#" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Delete user" onclick="event.preventDefault(); document.getElementById('deleteAdminUser{{ $admin_user->id }}').submit();">
                               Delete
                             </a>
-                            <form action="/admin/users/{{ $admin_user->id }}/delete" method="POST" id="deleteAdminUser{{ $admin_user->id }}" class="d-none">
+                            <form action="{{ url('/admin/users/' . $admin_user->id) }}" method="POST" id="deleteAdminUser{{ $admin_user->id }}" class="d-none">
+                              @csrf
+                              @method('delete')
                             </form>
                             @endcan
                             @endif
