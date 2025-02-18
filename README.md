@@ -37,4 +37,4 @@ php artisan serve
   5.3 Mg Mg is managing.
   5.4 Aye Aye don't have role.
 
-  First, login with kyaw kyaw and go to dashboard after than you can set the all roles and permissions and features.  
+  First, login with kyaw kyaw and go to dashboard after than you can set the all roles and permissions and features. And also change their own password.  

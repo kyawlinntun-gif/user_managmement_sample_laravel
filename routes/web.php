@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\HomeController;
 use App\Models\Permission;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +27,10 @@ Route::get('/', [HomeController::class, 'index']);
 // Auth
 Route::middleware('guest')->group(function() {
     Route::get('/login', [LoginController::class, 'showLoginForm']);
+    Route::get('/forgot-password', [ResetPasswordController::class, 'showResetLink']);
+    Route::post('/send-reset-link', [ResetPasswordController::class, 'sendResetLink']);
+    Route::get('/reset-password/{token}', [ResetPasswordController::class, 'showResetForm']);
+    Route::post('/reset-password', [ResetPasswordController::class, 'resetPassword']);
 });
 Route::post('/login', [LoginController::class, 'login']);
 Route::middleware('auth')->group(function() {

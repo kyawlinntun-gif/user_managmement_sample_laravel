@@ -1,6 +1,6 @@
 @extends('auth.layouts.app')
 
-@section('title', 'Login')
+@section('title', 'Reset Password')
 
 @section('content')
 <div class="container position-sticky z-index-sticky top-0">
@@ -24,24 +24,21 @@
               <div class="alert alert-danger text-white mt-4 mx-3">{{ $message }}</div>
             @enderror
             <div class="card-body">
-              <form role="form" class="text-start" method="POST" action="{{ url('login') }}">
+              <form role="form" class="text-start" method="POST" action="{{ url('/reset-password') }}">
                 @csrf
+                <input type="hidden" name="token" value="{{ $token }}">
                 <div class="input-group input-group-outline my-3">
-                  <input type="email" class="form-control" name="email" placeholder="Email" value="{{ old('email') }}">
-                </div>
-                @error('email')
-                  <span class="alert alert-danger form-control" role="alert">{{ $message }}</span>
-                @enderror
-                <div class="input-group input-group-outline mb-3">
-                  <input type="password" class="form-control" name="password" placeholder="Password">
+                  <input type="password" class="form-control" name="password" placeholder="New Password">
                 </div>
                 @error('password')
                   <span class="alert alert-danger form-control" role="alert">{{ $message }}</span>
                 @enderror
-                <div class="text-center">
-                  <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2">Sign in</button>
+                <div class="input-group input-group-outline my-3">
+                  <input type="password" class="form-control" name="password_confirmation" placeholder="Confirm Password">
                 </div>
-                <a href="{{ url('/forgot-password') }}">Forgot Password</a>
+                <div class="text-center">
+                  <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2">Change Password</button>
+                </div>
               </form>
             </div>
           </div>
