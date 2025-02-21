@@ -23,8 +23,6 @@ class AllUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'roles' => 'required|array',
-            'roles.*' => 'exists:roles,id',
             'features' => 'nullable|array',
             'features.*' => 'exists:features,id',
             'permissions' => 'nullable|array',

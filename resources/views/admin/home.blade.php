@@ -30,15 +30,7 @@
                 @if (!is_null($admin_user->role_id))
                   <h5>
                     {{ $admin_user->username }}
-                    (Role:
-                    <select name="roles[{{ $admin_user->id }}]"
-                      {{ Gate::denies('has-role', 'admin') ? 'disabled' : ''; }}
-                      >
-                      @foreach ($roles as $role)
-                        <option value="{{ $role->id }}" {{ $role->id === $admin_user->role_id ? 'selected' : ''; }}>{{ $role->name }}</option>
-                      @endforeach
-                    </select>
-                    )
+                    (Role: {{ $admin_user->role->name }})
                   </h5>
                   <table border="1" cellpadding="5" cellspacing="0">
                     <thead>

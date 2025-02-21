@@ -15,12 +15,10 @@ class HomeController extends Controller
     public function index()
     {
         $admin_users = AdminUser::all();
-        $roles = Role::all();
         $features = Feature::all();
         $permissions = Permission::all();
         return view('admin.home', [
             'admin_users' => $admin_users,
-            'roles' => $roles,
             'features' => $features,
             'permissions' => $permissions
         ]);
@@ -28,9 +26,13 @@ class HomeController extends Controller
 
     public function allUpdate(AllUpdateRequest $request)
     {
-        $roles = $request->get('roles');
         $features = $request->has('features') ? $request->get('features') : [];
         $permissions = $request->has('permissions') ? $request->get('permissions') : [];
+        $admin_users = AdminUser::whereNotNull('role_id')->get();
+        $roles = [];
+        foreach($admin_users as $user) {
+            $roles[$user->id] = $user->role_id;
+        }
         foreach ($roles as $user_id => $role_id) {
             $adminUser = AdminUser::find($user_id);
             if(!$adminUser) {
@@ -44,7 +46,7 @@ class HomeController extends Controller
             }
             $role->permissions()->detach();
             if(!empty($permissions[$user_id])) {
-                $validPermissions = Permission::whereIn('id', $permissions[$user_id])->pluck('id')->toArray();
+                $validPermissions = Permission::whereIn('id', $permissions[$user_id])->whereIn('feature_id', $features[$user_id])->pluck('id')->toArray();
                 $role->permissions()->sync($validPermissions);
             }
         }
