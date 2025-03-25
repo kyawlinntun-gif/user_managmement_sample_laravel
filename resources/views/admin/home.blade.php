@@ -26,11 +26,11 @@
             @endif
             <form action="{{ url('/admin/all-update') }}" method="POST">
               @csrf
-              @foreach ($admin_users as $admin_user)
-                @if (!is_null($admin_user->role_id))
+              @foreach ($adminUsers as $adminUser)
+                @if (!is_null($adminUser->role_id))
                   <h5>
-                    {{ $admin_user->username }}
-                    (Role: {{ $admin_user->role->name }})
+                    {{ $adminUser->username }}
+                    (Role: {{ $adminUser->role->name }})
                   </h5>
                   <table border="1" cellpadding="5" cellspacing="0">
                     <thead>
@@ -44,10 +44,10 @@
                         <tr>
                           <td>
                             @php
-                              $featureIds = $admin_user?->role?->permissions?->pluck('feature_id')->unique()->toArray();
+                              $featureIds = $adminUser?->role?->permissions?->pluck('feature_id')->unique()->toArray();
                             @endphp
                             <label>
-                              <input type="checkbox" name="features[{{ $admin_user->id }}][]" value="{{ $feature->id }}" class="feature-checkbox" data-user="{{ $admin_user->id }}"
+                              <input type="checkbox" name="features[{{ $adminUser->id }}][]" value="{{ $feature->id }}" class="feature-checkbox" data-user="{{ $adminUser->id }}"
                               {{ in_array($feature->id, $featureIds) ? 'checked' : ''; }}
                               {{ Gate::denies('has-role', 'admin') ? 'disabled' : ''; }}
                               >
@@ -56,12 +56,12 @@
                           </td>
                           <td>
                             @php
-                              $permissionIds = $admin_user?->role?->permissions->pluck('id')->toArray();
+                              $permissionIds = $adminUser?->role?->permissions->pluck('id')->toArray();
                             @endphp
                             @foreach ($permissions as $permission)
                               @if ($permission->feature_id === $feature->id)
                                 <label>
-                                  <input type="checkbox" name="permissions[{{ $admin_user->id }}][]" data-feature="{{ $feature->id }}" data-user="{{ $admin_user->id }}" class="permission-checkbox" value="{{ $permission->id }}"
+                                  <input type="checkbox" name="permissions[{{ $adminUser->id }}][]" data-feature="{{ $feature->id }}" data-user="{{ $adminUser->id }}" class="permission-checkbox" value="{{ $permission->id }}"
                                   {{ in_array($permission->id, $permissionIds) ? 'checked' : ''; }}
                                   {{ Gate::denies('has-role', 'admin') ? 'disabled' : ''; }}
                                   >

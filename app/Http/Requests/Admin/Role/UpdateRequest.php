@@ -25,7 +25,7 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'role_name' => ['required', 'min:3', 'string', new NoSpecialChars, Rule::unique('roles', 'name')->ignore($this->route('id'))]
+            'roleName' => ['required', 'min:3', 'string', new NoSpecialChars, Rule::unique('roles', 'name')->ignore($this->route('id'))]
         ];
     }
 }

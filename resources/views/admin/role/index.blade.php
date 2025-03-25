@@ -56,7 +56,7 @@
                         <a href="#" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Delete role" onclick="event.preventDefault(); document.getElementById('deleteRole{{ $role->id }}').submit();">
                           Delete
                         </a>
-                        <form action="{{ url('/admin/roles/' . $role->id) }}; ?>" method="POST" id="deleteRole<?=$role['id'];?>">
+                        <form action="{{ url('/admin/roles/' . $role->id) }}" method="POST" id="deleteRole{{ $role->id }}">
                           @csrf
                           @method('delete')
                         </form>

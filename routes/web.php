@@ -43,37 +43,37 @@ Route::middleware('auth')->group(function() {
             Route::get('/users', [UserController::class, 'index']);
             Route::get('/users/create', [UserController::class, 'create']);
             Route::post('/users/create', [UserController::class, 'store']);
-            Route::get('/users/{id}', [UserController::class, 'edit']);
-            Route::match(['put', 'patch'], '/users/{id}', [UserController::class, 'update']);
-            Route::delete('/users/{id}', [UserController::class, 'destroy']);
+            Route::get('/users/{id}', [UserController::class, 'edit'])->where('id', '[0-9]+');
+            Route::match(['put', 'patch'], '/users/{id}', [UserController::class, 'update'])->where('id', '[0-9]+');
+            Route::delete('/users/{id}', [UserController::class, 'destroy'])->where('id', '[0-9]+');
             // Role
             Route::get('/roles', [RoleController::class, 'index']);
             Route::get('/roles/create', [RoleController::class, 'create']);
             Route::post('/roles/create', [RoleController::class, 'store']);
-            Route::get('/roles/{id}', [RoleController::class, 'edit']);
-            Route::match(['put', 'patch'], '/roles/{id}', [RoleController::class, 'update']);
-            Route::delete('/roles/{id}', [RoleController::class, 'destroy']);
+            Route::get('/roles/{id}', [RoleController::class, 'edit'])->where('id', '[0-9]+');
+            Route::match(['put', 'patch'], '/roles/{id}', [RoleController::class, 'update'])->where('id', '[0-9]+');
+            Route::delete('/roles/{id}', [RoleController::class, 'destroy'])->where('id', '[0-9]+');
             // Permissions
             Route::get('/permissions', [PermissionController::class, 'index']);
             Route::get('/permissions/create', [PermissionController::class, 'create']);
             Route::post('/permissions/create', [PermissionController::class, 'store']);
-            Route::get('/permissions/{id}', [PermissionController::class, 'edit']);
-            Route::match(['put', 'patch'], '/permissions/{id}', [PermissionController::class, 'update']);
-            Route::delete('/permissions/{id}', [PermissionController::class, 'destroy']);
+            Route::get('/permissions/{id}', [PermissionController::class, 'edit'])->where('id', '[0-9]+');
+            Route::match(['put', 'patch'], '/permissions/{id}', [PermissionController::class, 'update'])->where('id', '[0-9]+');
+            Route::delete('/permissions/{id}', [PermissionController::class, 'destroy'])->where('id', '[0-9]+');
             // Features
             Route::get('/features', [FeatureController::class, 'index']);
             Route::get('/features/create', [FeatureController::class, 'create']);
             Route::post('/features/create', [FeatureController::class, 'store']);
-            Route::get('/features/{id}', [FeatureController::class, 'edit']);
-            Route::match(['put', 'patch'], '/features/{id}', [FeatureController::class, 'update']);
-            Route::delete('/features/{id}', [FeatureController::class, 'destroy']);
+            Route::get('/features/{id}', [FeatureController::class, 'edit'])->where('id', '[0-9]+');
+            Route::match(['put', 'patch'], '/features/{id}', [FeatureController::class, 'update'])->where('id', '[0-9]+');
+            Route::delete('/features/{id}', [FeatureController::class, 'destroy'])->where('id', '[0-9]+');
             // Product
             Route::get('/products', [ProductController::class, 'index']);
             Route::get('/products/create', [ProductController::class, 'create']);
             Route::post('/products/create', [ProductController::class, 'store']);
-            Route::get('/products/{id}', [ProductController::class, 'edit']);
-            Route::match(['put', 'patch'], '/products/{id}', [ProductController::class, 'update']);
-            Route::delete('/products/{id}', [ProductController::class, 'destroy']);
+            Route::get('/products/{id}', [ProductController::class, 'edit'])->where('id', '[0-9]+');
+            Route::match(['put', 'patch'], '/products/{id}', [ProductController::class, 'update'])->where('id', '[0-9]+');
+            Route::delete('/products/{id}', [ProductController::class, 'destroy'])->where('id', '[0-9]+');
         });
     });
     Route::middleware('role:admin')->group(function() {

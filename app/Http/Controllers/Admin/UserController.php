@@ -2,86 +2,122 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Role;
-use App\Models\AdminUser;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\User\StoreRequest;
 use App\Http\Requests\Admin\User\UpdateRequest;
+use App\Repositories\AdminUser\AdminUserRepositoryInterface;
+use App\Repositories\Role\RoleRepositoryInterface;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
+/**
+ * Class UserController
+ * 
+ * Handles the management of admin users.
+ */
 class UserController extends Controller
 {
-    public function __construct()
+    /**
+     * @var AdminUserRepositoryInterface
+     */
+    private AdminUserRepositoryInterface $adminUserRepository;
+    /**
+     * @var RoleRepositoryInterface
+     */
+    private RoleRepositoryInterface $roleRepository;
+
+    /**
+     * UserController constructor.
+     *
+     * @param AdminUserRepositoryInterface $adminUserRepository
+     * @param RoleRepositoryInterface $roleRepository
+     */
+    public function __construct(AdminUserRepositoryInterface $adminUserRepository, RoleRepositoryInterface $roleRepository)
     {
         $this->middleware('permission:read,user')->only('index');
         $this->middleware('permission:create,user')->only(['create', 'store']);
         $this->middleware('permission:update,user')->only(['edit', 'update']);
         $this->middleware('permission:delete,user')->only('destroy');
+        $this->adminUserRepository = $adminUserRepository;
+        $this->roleRepository = $roleRepository;
     }
 
-    public function index()
+    /**
+     * Display a listing of admin users along with their roles.
+     *
+     * @return View The view displaying the list of admin users.
+     */
+    public function index(): View
     {
-        $admin_users = AdminUser::with('role')->get();
+        $adminUsers = $this->adminUserRepository->getAdminUserWithRole();
         return view('admin.user.index', [
-            'admin_users' => $admin_users
+            'adminUsers' => $adminUsers
         ]);
     }
 
-    public function create()
+    /**
+     * Show the form for creating a new adminuser.
+     *
+     * @return View The view for creating an admin user.
+     */
+    public function create(): View
     {
-        $roles = Role::all();
+        $roles = $this->roleRepository->index();
         return view('admin.user.create', [
             'roles' => $roles
         ]);
     }
 
-    public function store(StoreRequest $request)
+    /**
+     * Handle the request to store a new admin user.
+     *
+     * @param StoreRequest $request The validated request containing user data.
+     * @return RedirectResponse Redirects to the users list with a success message.
+     */
+    public function store(StoreRequest $request): RedirectResponse
     {
-        $admin_user = new AdminUser();
-        $admin_user->name = $request->name;
-        $admin_user->username = $request->username;
-        $admin_user->role_id = $request->role_id;
-        $admin_user->phone = $request->phone;
-        $admin_user->email = $request->email;
-        $admin_user->password = password_hash($request->password, PASSWORD_BCRYPT);
-        $admin_user->address = $request->address;
-        $admin_user->gender = $request->gender;
-        $admin_user->is_active = $request->is_active;
-        $admin_user->save();
-
+        $this->adminUserRepository->store($request);
         return redirect('/admin/users')->with('success', 'User created successfully!');
     }
 
-    public function edit($id)
+    /**
+     * Show the form for editing the specified adminuser.
+     *
+     * @param int $id The ID of the admin user to edit.
+     * @return View The view displaying the edit form with user and role data.
+     */
+    public function edit(int $id): View
     {
-        $user = AdminUser::findOrFail($id);
-        $roles = Role::all();
+        $user = $this->adminUserRepository->show($id);
+        $roles = $this->roleRepository->index();
         return view('admin.user.edit', [
             'user' => $user,
             'roles' => $roles
         ]);
     }
 
-    public function update(UpdateRequest $request, $id)
+    /**
+     * Handle the request to update an existing adminuser.
+     *
+     * @param UpdateRequest $request The validated request containing updated user data.
+     * @param int $id The ID of the adminuser to update.
+     * @return RedirectResponse Redirects to the users list with a success message.
+     */
+    public function update(UpdateRequest $request, $id): RedirectResponse
     {
-        $admin_user = AdminUser::findOrFail($id);
-        $admin_user->name = $request->name;
-        $admin_user->username = $request->username;
-        $admin_user->role_id = $request->role_id;
-        $admin_user->phone = $request->phone;
-        $admin_user->email = $request->email;
-        $admin_user->address = $request->address;
-        $admin_user->gender = $request->gender;
-        $admin_user->is_active = $request->is_active;
-        $admin_user->update();
-
+        $this->adminUserRepository->update($request, $id);
         return redirect('/admin/users')->with('success', 'User updated successfully!');
     }
 
-    public function destroy($id)
+    /**
+     * Handle the request to delete an adminuser.
+     *
+     * @param integer $id The ID of the adminuser to delete.
+     * @return RedirectResponse A redirect response to the admin users list with a success message.
+     */
+    public function destroy(int $id): RedirectResponse
     {
-        $admin_user = AdminUser::findOrFail($id);
-        $admin_user->delete();
+        $this->adminUserRepository->destroy($id);
         return redirect('/admin/users')->with('success', 'User deleted successfully!');
     }
 }

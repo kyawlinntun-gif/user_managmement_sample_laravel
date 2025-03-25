@@ -24,9 +24,9 @@
               <form role="form" method="POST" action="{{ url('/admin/roles/create') }}">
                 @csrf
                 <div class="input-group input-group-outline mb-3">
-                  <input type="text" class="form-control" placeholder="Role Name" value="{{ old('role_name') }}" name="role_name">
+                  <input type="text" class="form-control" placeholder="Role Name" value="{{ old('roleName') }}" name="roleName">
                 </div>
-                @error('role_name')
+                @error('roleName')
                   <span class="alert alert-danger form-control" role="alert">{{ $message }}</span>
                 @enderror
                 <div>

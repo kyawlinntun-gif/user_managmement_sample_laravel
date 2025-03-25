@@ -40,49 +40,49 @@
                   </tr>
                 </thead>
                 <tbody>
-                  @if(isset($admin_users))
-                    @if(count($admin_users) > 0)
-                      @foreach($admin_users as $admin_user)
+                  @if(isset($adminUsers))
+                    @if(count($adminUsers) > 0)
+                      @foreach($adminUsers as $adminUser)
                         <tr>
                           <td>
                             <div class="d-flex flex-column justify-content-center">
-                              <h6 class="mb-0 text-sm">{{ $admin_user->name }}</h6>
+                              <h6 class="mb-0 text-sm">{{ $adminUser->name }}</h6>
                             </div>
                           </td>
                           <td>
-                            <p class="text-xs font-weight-bold mb-0">{{ $admin_user->username }}</p>
+                            <p class="text-xs font-weight-bold mb-0">{{ $adminUser->username }}</p>
                           </td>
                           <td>
-                            <p class="text-xs font-weight-bold mb-0">{{ isset($admin_user->role->name) ? $admin_user->role->name : ''; }}</p>
+                            <p class="text-xs font-weight-bold mb-0">{{ isset($adminUser->role->name) ? $adminUser->role->name : ''; }}</p>
                           </td>
                           <td class="align-middle text-center text-sm">
-                            <span class="badge badge-sm bg-gradient-success">{{ $admin_user->phone }}</span>
+                            <span class="badge badge-sm bg-gradient-success">{{ $adminUser->phone }}</span>
                           </td>
                           <td class="align-middle text-center text-sm">
-                            <span class="badge badge-sm bg-gradient-success">{{ $admin_user->email }}</span>
+                            <span class="badge badge-sm bg-gradient-success">{{ $adminUser->email }}</span>
                           </td>
                           <td class="align-middle text-center text-sm">
-                            <span class="badge badge-sm bg-gradient-success">{{ $admin_user->address }}</span>
+                            <span class="badge badge-sm bg-gradient-success">{{ $adminUser->address }}</span>
                           </td>
                           <td class="align-middle text-center text-sm">
-                            <span class="badge badge-sm bg-gradient-success">{{ $admin_user->gender == 1 ? 'Male' : 'Female'; }}</span>
+                            <span class="badge badge-sm bg-gradient-success">{{ $adminUser->gender == 1 ? 'Male' : 'Female'; }}</span>
                           </td>
                           <td class="align-middle text-center text-sm">
-                            <span class="badge badge-sm bg-gradient-success">{{ $admin_user->is_active == 1 ? 'Active' : 'Inactive'; }}</span>
+                            <span class="badge badge-sm {{ $adminUser->is_active == 1 ? 'bg-gradient-success': 'bg-gradient-warning' }}">{{ $adminUser->is_active == 1 ? 'Active' : 'Inactive'; }}</span>
                           </td>
                           <td class="align-middle">
                             @can('has-permission', ['update', 'user'])
-                            <a href="{{ url('/admin/users/' . $admin_user->id) }}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                            <a href="{{ url('/admin/users/' . $adminUser->id) }}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                               Edit
                             </a>
                             @endcan
-                            @if(auth()->user()->id !== $admin_user->id && optional($admin_user->role)->name !== 'admin') 
+                            @if(auth()->user()->id !== $adminUser->id && optional($adminUser->role)->name !== 'admin') 
                             @can('has-permission', ['delete', 'user'])
                             <span> | </span>
-                            <a href="#" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Delete user" onclick="event.preventDefault(); document.getElementById('deleteAdminUser{{ $admin_user->id }}').submit();">
+                            <a href="#" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Delete user" onclick="event.preventDefault(); document.getElementById('deleteAdminUser{{ $adminUser->id }}').submit();">
                               Delete
                             </a>
-                            <form action="{{ url('/admin/users/' . $admin_user->id) }}" method="POST" id="deleteAdminUser{{ $admin_user->id }}" class="d-none">
+                            <form action="{{ url('/admin/users/' . $adminUser->id) }}" method="POST" id="deleteAdminUser{{ $adminUser->id }}" class="d-none">
                               @csrf
                               @method('delete')
                             </form>
